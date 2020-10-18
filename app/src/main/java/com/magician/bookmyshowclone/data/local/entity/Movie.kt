@@ -1,4 +1,4 @@
-package com.magician.bookmyshowclone.model
+package com.magician.bookmyshowclone.data.local.entity
 
 import com.google.gson.annotations.SerializedName
 

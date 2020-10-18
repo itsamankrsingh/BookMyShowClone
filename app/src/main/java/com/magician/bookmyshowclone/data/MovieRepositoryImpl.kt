@@ -1,12 +1,16 @@
 package com.magician.bookmyshowclone.data
 
-import com.magician.bookmyshowclone.model.MovieResponse
-import com.magician.bookmyshowclone.retrofit.MovieService
+import com.magician.bookmyshowclone.data.local.dao.MovieDao
+import com.magician.bookmyshowclone.data.local.entity.MovieResponse
+import com.magician.bookmyshowclone.data.remote.retrofit.MovieService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieRepositoryImpl(private val movieService: MovieService) : MovieRepository {
+class MovieRepositoryImpl(
+    private val movieDao: MovieDao,
+    private val movieService: MovieService
+) : MovieRepository {
 
     override fun fetchMovies(
         apiKey: String,
@@ -19,6 +23,7 @@ class MovieRepositoryImpl(private val movieService: MovieService) : MovieReposit
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     Thread {
+                        movieDao.insertMovies(response.body()!!)
                         onSuccess(response.body()!!)
                     }.start()
                 } else {
@@ -30,5 +35,11 @@ class MovieRepositoryImpl(private val movieService: MovieService) : MovieReposit
                 onError(t.localizedMessage ?: "Something Went Wrong")
             }
         })
+    }
+
+    override fun getMoviesLocal(onSuccess: (MovieResponse?) -> Unit) {
+        Thread {
+            onSuccess(movieDao.getMovies())
+        }.start()
     }
 }

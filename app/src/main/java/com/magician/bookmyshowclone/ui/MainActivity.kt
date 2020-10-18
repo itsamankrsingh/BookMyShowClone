@@ -8,16 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.magician.bookmyshowclone.R
 import com.magician.bookmyshowclone.data.MovieRepositoryImpl
-import com.magician.bookmyshowclone.model.Movie
-import com.magician.bookmyshowclone.model.MovieResponse
-import com.magician.bookmyshowclone.retrofit.RetrofitBuilder
+import com.magician.bookmyshowclone.data.local.MovieDatabase
+import com.magician.bookmyshowclone.data.local.entity.Movie
+import com.magician.bookmyshowclone.data.remote.retrofit.RetrofitBuilder
 import com.magician.bookmyshowclone.ui.adapter.MovieAdapter
 import com.magician.bookmyshowclone.ui.util.MainViewModelFactory
 import com.magician.bookmyshowclone.util.NetworkHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,7 +45,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(
             this, MainViewModelFactory(
                 NetworkHelper(this),
-                MovieRepositoryImpl(RetrofitBuilder.buildService())
+                MovieRepositoryImpl(
+                    MovieDatabase.getInstance(this).movieDao(),
+                    RetrofitBuilder.buildService()
+                )
             )
         )[MainViewModel::class.java]
         viewModel.onCreate()

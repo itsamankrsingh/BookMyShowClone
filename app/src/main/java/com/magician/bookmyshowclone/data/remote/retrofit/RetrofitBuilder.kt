@@ -1,4 +1,4 @@
-package com.magician.bookmyshowclone.retrofit
+package com.magician.bookmyshowclone.data.remote.retrofit
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

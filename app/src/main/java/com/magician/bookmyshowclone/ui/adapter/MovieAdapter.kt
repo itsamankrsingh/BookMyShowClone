@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.magician.bookmyshowclone.R
-import com.magician.bookmyshowclone.model.Movie
+import com.magician.bookmyshowclone.data.local.entity.Movie
 import kotlinx.android.synthetic.main.movie_item_layout.view.*
 
 class MovieAdapter(private val movies: ArrayList<Movie>) :
