@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BookMyShowClone</string>
+    <string name="error_msg">Oops! Something went wrong!</string>
+    <string name="no_internet">Oops! Please Check Your Internet Connection!</string>
+</resources>
